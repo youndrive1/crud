@@ -1,3 +1,4 @@
+import django_heroku
 """
 Django settings for blogprj project.
 
@@ -48,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WHiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'blogprj.urls'
@@ -121,3 +123,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STAICFILES_DIRS = [ os.path.join(BASE_DIR, 'static') ]
 # STATIC_ROOT = '/static/'
+STATICFILES_STORAGE
+django_heroku.settings(locals())
