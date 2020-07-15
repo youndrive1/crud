@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% for obj in posts.all %}
+    <h1>제목: {{ obj.title }}</h1>
+    <p>내용: {{obj.body }}</p>
+    <p>{{ obj.pk }}</pk>
+    <p>올린날짜: {{obj.date }}</p>
+    <a href="{% url 'detail' obj.pk %}">자세히보기</a>
+    {% endfor %}
+</body>
+</html>
