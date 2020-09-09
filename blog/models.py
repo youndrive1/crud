@@ -9,3 +9,13 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+class Comment(models.Model):
+    blog = models.ForeignKey(Post, on_delete=models.CASCADE,
+    related_name='comments')
+    date = models.DateTimeField(auto_now_add=True)
+    body = models.TextField()
+
+    def __str__(self):
+        return self.body
+

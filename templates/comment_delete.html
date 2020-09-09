@@ -1,0 +1,7 @@
+<form action="" method="post">
+    {% csrf_token%}
+    <div role="alert">
+        <p>정말 {{object}}를 지우시겠습니까?</p>
+    </div>
+    <input type="submit" value="삭제" />
+</form>

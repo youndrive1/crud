@@ -1,11 +1,19 @@
 from django.shortcuts import render, redirect, get_object_or_404 #import redirect
-from .models import Post
-from .forms import PostForm # forms.py에서 PostForm 가져오기 
+from .models import Post, Comment
+from .forms import PostForm, CommentForm # forms.py에서 PostForm 가져오기 
 
 
 def detail(request, pk): # request와 pk도 인자로 받음
     post = get_object_or_404(Post, pk=pk) # 해당 객체가 있으면 가져오고 없으면 404에러, pk로 pk 사용
-    return render(request, 'detail.html', {'post':post})
+    if request.method == 'POST':
+        comment_form = CommentForm(request.POST)
+        comment_form.instance.blog_id = pk
+        if comment_form.is_valid():
+            comment = comment_form.save()
+    comment_form = CommentForm()
+    comments = post.comments.all()
+    return render(request, 'detail.html', {'blog': post, 'comments':
+    comments, 'comment_form': comment_form})
 
 def main(request):
     posts = Post.objects # Post.objects를 posts 변수에 담기
@@ -36,3 +44,26 @@ def delete(request,pk):
     post = Post.objects.get(pk=pk)
     post.delete() # delete함수 실행
     return redirect('main')
+
+def comment_update(request,pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    blog = get_object_or_404(Post, pk=comment.blog.id)
+
+    if request.method =='POST':
+        form = CommentForm(request.POST, instance=comment)
+        if form.is_valid():
+            form.save()
+            return redirect('/detail/'+str(blog.id))
+    else:
+        form = CommentForm(instance=comment)
+    return render(request, 'comment_update.html', {'form':form})
+    
+def comment_delete(request,pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    blog = get_object_or_404(Post, pk=comment.blog.id)
+
+    if request.method == 'POST':
+        comment.delete()
+        return redirect('/detail/'+str(blog.id))
+    else:
+        return render(request, 'comment_delete.html', {'object': comment})
