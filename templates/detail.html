@@ -3,17 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ post.pk }}번째 게시물</title>
+    <title>Comment</title>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&family=Nanum+Gothic:wght@800&display=swap" rel="stylesheet">
+    <style type="text/css">
+        h1{font-family: 'Jua', sans-serif}
+        strong{font-family: 'Nanum Gothic', sans-serif}
+    </style>
+    <style>
+        h1{
+            color:#900020;
+            font-size:50px
+        }
+        strong{font-size:30px}
+        div{background-color:#f0bf9b}
+        div > p {color: #a59c94}
+        div > a {color:#ac4fc6}
+        form{color:#900020}
+    </style>
 </head>
 <body>
-    <h1>{{ post.title }}</h1>
-    <p>게시물 번호(id): {{ post.pk }}</p>
-    <p>글쓴이: {{ post.author }}</p>
-    <p>등록일: {{ post.date }}</p>
-    <p>{{ post.body }}</p>
-
-<hr />
-<h3>댓글창</h3>
+<h1>댓글창</h1>
 {% for comment in blog.comments.all %}
 <div class="detail">
     <strong>{{comment.body}}</strong>
